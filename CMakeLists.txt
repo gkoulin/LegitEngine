@@ -11,6 +11,7 @@ set(TINYOBJ_INCLUDE_DIR ./dependencies/tiny_obj_loader/include)
 set(SPIRVCROSS_INCLUDE_DIR ./dependencies/spirv-cross)
 set(GLI_INCLUDE_DIR ./dependencies/gli)
 set(GLM_INCLUDE_DIR ./dependencies/glm/include)
+set(IMGUI_INCLUDE_DIR ./dependencies/imgui)
 set(GLFW3_INCLUDE_DIR ./dependencies/glfw/include)
 set(JSONCPP_INCLUDE_DIR ./dependencies/jsoncpp)
 
@@ -20,6 +21,7 @@ set(GLFW3_LIBRARIES "${CMAKE_SOURCE_DIR}/dependencies/glfw/lib-vc2015/glfw3.lib"
 
 include_directories ("${Vulkan_INCLUDE_DIRS}")
 include_directories ("${GLM_INCLUDE_DIR}")
+include_directories ("${IMGUI_INCLUDE_DIR}")
 include_directories ("${GLFW3_INCLUDE_DIR}")
 include_directories ("${SPIRVCROSS_INCLUDE_DIR}")
 include_directories ("${GLI_INCLUDE_DIR}")
@@ -30,11 +32,12 @@ include_directories ("${JSONCPP_INCLUDE_DIR}")
 #include_directories ("${CMAKE_SOURCE_DIR}/dependencies/glm/include")
 #include_directories ("${CMAKE_SOURCE_DIR}/dependencies/glfw/include")
 
-file(GLOB_RECURSE dep_sources ${SPIRVCROSS_INCLUDE_DIR}/*.cpp ${TINYOBJ_INCLUDE_DIR}/*.cc ${JSONCPP_INCLUDE_DIR}/*.cpp)
+file(GLOB_RECURSE dep_sources ${SPIRVCROSS_INCLUDE_DIR}/*.cpp ${TINYOBJ_INCLUDE_DIR}/*.cc ${JSONCPP_INCLUDE_DIR}/*.cpp ${IMGUI_INCLUDE_DIR}/*.cpp)
 file(GLOB_RECURSE legit_sources ./src/*.cpp)
 file(GLOB_RECURSE legit_headers ./src/*.h)
 
 add_executable(LegitEngine)
+target_compile_options(LegitEngine PRIVATE /bigobj)
 
 #source_group(TREE src/)
 target_sources(LegitEngine PRIVATE ${dep_sources} ${legit_sources} ${legit_headers})
